@@ -18,11 +18,8 @@
         @Autowired
         CarRepository carRepository;
 
-
-
         @Autowired
         private EntityManager entityManager;
-
 
         @Test
         public void testFindAll(){

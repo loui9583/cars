@@ -2,52 +2,53 @@ package dat3.car.cars.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+@Getter
+@Setter
+@NoArgsConstructor
 
 @Entity
-public class Member {
+@Table(name = "members")
+public class Member extends AdminDetails {
 
-
+    // Id
     @Id
     private String username;
 
-    @Column(name = "user_password")
-    private String password;
-
-    @Column(name = "user_email")
+    // Columns
+    @Column(nullable = false, unique = true, length = 50)
     private String email;
 
-    @Column(name = "user_first_name")
+    @Column(nullable = false, length = 50)
+    private String password;
+
+    @Column(nullable = false, length = 50)
     private String firstName;
 
-    @Column(name = "user_last_name")
+    @Column(nullable = false, length = 50)
     private String lastName;
 
-    @Column(name = "user_street")
+    @Column(nullable = false, length = 50)
     private String street;
 
-    @Column(name = "user_city")
+    @Column(nullable = false, length = 50)
     private String city;
 
-    @Column(name = "user_zip")
+    @Column(nullable = false, length = 10)
     private String zip;
 
+    @Column
+    private boolean approved;
 
-    @CreationTimestamp
-    private LocalDate createDateTime;
+    @Column
+    private int ranking;
 
-    @UpdateTimestamp
-    private LocalDateTime updateDateTime;
-
-    public Member() {
-    }
-
+    // Constructors
     public Member(String user, String password, String email, String firstName,
                   String lastName, String street, String city, String zip) {
         this.username = user;
@@ -60,3 +61,4 @@ public class Member {
         this.zip = zip;
     }
 }
+ 
