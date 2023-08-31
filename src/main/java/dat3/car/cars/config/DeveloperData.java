@@ -24,7 +24,7 @@ public class DeveloperData implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         carRepository.saveAll(generateCars());
         memberRepository.saveAll(generateMembers());
     }
@@ -32,15 +32,15 @@ public class DeveloperData implements ApplicationRunner {
     @GetMapping("/members")
      List<Member> generateMembers() {
         List<Member> members = new ArrayList<>();
-        members.add(new Member("johndoe", "password123", "john@example.com", "John", "Doe", "123 Main St", "New York", "10001"));
-        members.add(new Member("janedoe", "pass456", "jane@example.com", "Jane", "Doe", "456 Elm St", "Los Angeles", "90001"));
-        members.add(new Member("mike1985", "securepass", "mike@example.com", "Michael", "Johnson", "789 Oak Ave", "Chicago", "60601"));
-        members.add(new Member("emily_smith", "emilypass", "emily@example.com", "Emily", "Smith", "10 Park Rd", "San Francisco", "94101"));
-        members.add(new Member("alexwalker", "abc123", "alex@example.com", "Alex", "Walker", "777 Pine St", "Seattle", "98101"));
+        members.add(new Member("john_doe", "password123", "john@example.com", "John", "Doe", "123 Main St", "New York", "10001"));
+        members.add(new Member("jane_doe", "pass456", "jane@example.com", "Jane", "Doe", "456 Elm St", "Los Angeles", "90001"));
+        members.add(new Member("mike_1985", "secure_pass", "mike@example.com", "Michael", "Johnson", "789 Oak Ave", "Chicago", "60601"));
+        members.add(new Member("emily_smith", "emily_pass", "emily@example.com", "Emily", "Smith", "10 Park Rd", "San Francisco", "94101"));
+        members.add(new Member("alex_walker", "abc123", "alex@example.com", "Alex", "Walker", "777 Pine St", "Seattle", "98101"));
         members.add(new Member("lisa_miller", "lisa456", "lisa@example.com", "Lisa", "Miller", "999 Broadway", "Boston", "02101"));
-        members.add(new Member("davidwilson", "davidpass", "david@example.com", "David", "Wilson", "555 Cedar St", "Miami", "33101"));
-        members.add(new Member("sarah_jones", "sarahpass", "sarah@example.com", "Sarah", "Jones", "1234 Maple Ave", "Dallas", "75201"));
-        members.add(new Member("ryan_parker", "ryanpass", "ryan@example.com", "Ryan", "Parker", "9876 Oak Rd", "Phoenix", "85001"));
+        members.add(new Member("david_wilson", "david_pass", "david@example.com", "David", "Wilson", "555 Cedar St", "Miami", "33101"));
+        members.add(new Member("sarah_jones", "sarah_pass", "sarah@example.com", "Sarah", "Jones", "1234 Maple Ave", "Dallas", "75201"));
+        members.add(new Member("ryan_parker", "ryan_pass", "ryan@example.com", "Ryan", "Parker", "9876 Oak Rd", "Phoenix", "85001"));
         members.add(new Member("olivia_smith", "olivia123", "olivia@example.com", "Olivia", "Smith", "5432 Pine Rd", "Denver", "80201"));
         return members;
     }

@@ -78,7 +78,7 @@ class MemberServiceTest {
     @Test
     void testAddMember_UserDoesNotExist() {
         // Test at et medlem kan tilføjes hvis det ikke eksisterer i forvejen
-        Member member = new Member("user3", "pw3", "em3", "fN3", "lN3", "strt3", "city3", "zip");
+        Member member = new Member("user3", "pw3", "em3", "fN3", "lN3", "street3", "city3", "zip");
         MemberRequest memberRequest = new MemberRequest(member);
         memberService.addMember(memberRequest);
         assertEquals("em3", memberService.getMemberByUsername("user3").getEmail());
@@ -106,7 +106,7 @@ class MemberServiceTest {
 
     @Test
     void testEditMemberNON_ExistingUsernameThrows() {
-        // Test at en fejl kastes hvis medlemsinformation forsøges redigeret med ikke-eksisterende brugernavn
+        // Test at en fejl throws hvis medlem forsøges redigeret med ikke-eksisterende brugernavn
         Member member = memberService.getMemberByUsername("user1");
         MemberRequest memberRequest = new MemberRequest(member);
         memberRequest.setCity("Copenhagen");
@@ -116,7 +116,7 @@ class MemberServiceTest {
 
     @Test
     void testEditMemberChangePrimaryKeyThrows() {
-        // Test at en fejl kastes hvis medlems brugernavn forsøges ændret
+        // Test at en fejl throws hvis man prøver at ændre medlems brugernavn (pga username er PK)
         MemberRequest memberRequest = new MemberRequest(memberService.getMemberByUsername("user1"));
         memberRequest.setUsername("John");
         assertThrows(ResponseStatusException.class, () -> memberService.editMember(memberRequest, "user1"));
@@ -124,8 +124,8 @@ class MemberServiceTest {
 
     @Test
     void testSetRankingForUser() {
-        // Test at en medlems rangering kan ændres og er korrekt efter ændring
-        memberService.setRankingForUser("user1",10);
+        // Test at en medlems ranking kan ændres og er korrekt efter ændring
+        memberService.setRankingForUser("user1", 10);
         assertEquals(10, memberService.getMemberByUsername("user1").getRanking());
     }
 

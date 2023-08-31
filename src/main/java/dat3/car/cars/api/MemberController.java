@@ -17,7 +17,7 @@ class MemberController {
         this.memberService = memberService;
     }
 
-    //security ???
+    //security --> Admin
     @GetMapping
     List<MemberResponse> getMembers() {
         return memberService.getMembers(false);
@@ -34,8 +34,8 @@ class MemberController {
     MemberResponse addMember(@RequestBody MemberRequest body) {
         return memberService.addMember(body);
     }
-    //Security ???
 
+    //Security --> Admin
     @PutMapping("/{username}")
     void editMember(@RequestBody MemberRequest body, @PathVariable String username) {
         memberService.editMember(body, username);
@@ -47,10 +47,9 @@ class MemberController {
         memberService.setRankingForUser(username, value);
     }
 
-    // Security ????
+    // Security --> Admin
     @DeleteMapping("/{username}")
     void deleteMemberByUsername(@PathVariable String username) {
-    memberService.deleteById(username);
+        memberService.deleteById(username);
     }
 }
-

@@ -1,7 +1,6 @@
     package dat3.car.cars.repositories;
 
     import dat3.car.cars.entity.Car;
-    import jakarta.persistence.EntityManager;
     import org.junit.jupiter.api.Test;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -18,9 +17,6 @@
         @Autowired
         CarRepository carRepository;
 
-        @Autowired
-        private EntityManager entityManager;
-
         @Test
         public void testFindAll(){
             Car car = new Car("Toyota","Camry",100,100);
@@ -31,11 +27,11 @@
 
         @Test
         public void testAddRowToDb(){
-            Integer startvalue = carRepository.findAll().size();
+            int startValue = carRepository.findAll().size();
             Car car = new Car("BMW","M3",100,10);
             carRepository.save(car);
-            Integer endValue = carRepository.findAll().size();
-            boolean isEndValueBiggerThanStartValue = endValue > startvalue;
+            int endValue = carRepository.findAll().size();
+            boolean isEndValueBiggerThanStartValue = endValue > startValue;
             assertTrue(isEndValueBiggerThanStartValue);
         }
 

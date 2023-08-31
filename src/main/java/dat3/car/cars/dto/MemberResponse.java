@@ -10,13 +10,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor //A must for @Builder
-@Builder  //I will demo it's purpose in the class
-//It's really IMPORTANT that you understand the purpose of this annotation
+@AllArgsConstructor
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberResponse {
-    String username; //Remember this is the primary key
-    //Observe password is obviously not included
+    String username;
     String email;
     String firstName;
     String lastName;
@@ -31,7 +29,6 @@ public class MemberResponse {
     Integer ranking;
     Boolean approved;
 
-    //Convert Member Entity to Member DTO
     public MemberResponse(Member m, Boolean includeAll) {
         this.username = m.getUsername();
         this.email = m.getEmail();
