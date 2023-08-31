@@ -20,6 +20,7 @@ class MemberServiceTest {
 
     @Autowired
     MemberRepository memberRepository;
+
     MemberService memberService;
 
     Member m1, m2;
