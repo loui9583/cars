@@ -30,7 +30,7 @@ public class DeveloperData implements ApplicationRunner {
     }
 
     @GetMapping("/members")
-     List<Member> generateMembers() {
+    List<Member> generateMembers() {
         List<Member> members = new ArrayList<>();
         members.add(new Member("john_doe", "password123", "john@example.com", "John", "Doe", "123 Main St", "New York", "10001"));
         members.add(new Member("jane_doe", "pass456", "jane@example.com", "Jane", "Doe", "456 Elm St", "Los Angeles", "90001"));

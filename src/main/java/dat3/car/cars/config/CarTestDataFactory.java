@@ -6,23 +6,10 @@ import java.util.*;
 
 public class CarTestDataFactory {
 
-    private static final List<String> brands = Arrays.asList(
-            "Toyota", "Honda", "Ford", "BMW", "Mercedes", "Chevrolet", "Volkswagen", "Audi", "Hyundai", "Nissan"
-    );
-    private static final Map<String, List<String>> models = Map.of(
-            "Toyota", Arrays.asList("Camry", "Corolla", "Prius"),
-            "Honda", Arrays.asList("Civic", "Accord", "CR-V"),
-            "Ford", Arrays.asList("Focus", "Mustang", "Fiesta"),
-            "BMW", Arrays.asList("M3", "X3", "X5"),
-            "Mercedes", Arrays.asList("C-Class", "E-Class", "A-Class"),
-            "Chevrolet", Arrays.asList("Malibu", "Impala", "Camaro"),
-            "Volkswagen", Arrays.asList("Golf", "Passat", "Tiguan"),
-            "Audi", Arrays.asList("A4", "A6", "Q5"),
-            "Hyundai", Arrays.asList("Elantra", "Santa Fe", "Tucson"),
-            "Nissan", Arrays.asList("Altima", "Maxima", "Rogue")
-    );
+    private static final List<String> brands = Arrays.asList("Toyota", "Honda", "Ford", "BMW", "Mercedes", "Chevrolet", "Volkswagen", "Audi", "Hyundai", "Nissan");
+    private static final Map<String, List<String>> models = Map.of("Toyota", Arrays.asList("Camry", "Corolla", "Prius"), "Honda", Arrays.asList("Civic", "Accord", "CR-V"), "Ford", Arrays.asList("Focus", "Mustang", "Fiesta"), "BMW", Arrays.asList("M3", "X3", "X5"), "Mercedes", Arrays.asList("C-Class", "E-Class", "A-Class"), "Chevrolet", Arrays.asList("Malibu", "Impala", "Camaro"), "Volkswagen", Arrays.asList("Golf", "Passat", "Tiguan"), "Audi", Arrays.asList("A4", "A6", "Q5"), "Hyundai", Arrays.asList("Elantra", "Santa Fe", "Tucson"), "Nissan", Arrays.asList("Altima", "Maxima", "Rogue"));
 
-    private static final List<Integer> discounts = Arrays.asList(2,5,10,15,20,25,30,35,40,45);
+    private static final List<Integer> discounts = Arrays.asList(2, 5, 10, 15, 20, 25, 30, 35, 40, 45);
 
     public static List<Car> generateTestCars() {
         Random random = new Random();

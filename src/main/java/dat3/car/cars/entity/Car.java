@@ -9,13 +9,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Car extends AdminDetails{
+public class Car extends AdminDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "car_brand" , nullable = false )
+    @Column(name = "car_brand", nullable = false)
     private String brand;
 
     @Column(name = "car_model", nullable = false, length = 60)

@@ -49,8 +49,7 @@ public class Member extends AdminDetails {
     private int ranking;
 
     // Constructors
-    public Member(String user, String password, String email, String firstName,
-                  String lastName, String street, String city, String zip) {
+    public Member(String user, String password, String email, String firstName, String lastName, String street, String city, String zip) {
         this.username = user;
         this.password = password;
         this.email = email;

@@ -24,7 +24,7 @@ public class MemberResponse {
     //@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
     LocalDateTime created;
 
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
     LocalDateTime edited;
     Integer ranking;
     Boolean approved;
@@ -33,11 +33,11 @@ public class MemberResponse {
         this.username = m.getUsername();
         this.email = m.getEmail();
         this.street = m.getStreet();
-        this.firstName =m.getFirstName();
+        this.firstName = m.getFirstName();
         this.lastName = m.getLastName();
         this.city = m.getCity();
         this.zip = m.getZip();
-        if(includeAll){
+        if (includeAll) {
             this.created = m.getCreated();
             this.edited = m.getEdited();
             this.approved = m.isApproved();

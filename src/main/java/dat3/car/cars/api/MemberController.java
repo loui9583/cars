@@ -23,10 +23,20 @@ class MemberController {
         return memberService.getMembers(false);
     }
 
+    @GetMapping("/includeAll")
+    List<MemberResponse> getMembersIncludeAll() {
+        return memberService.getMembers(true);
+    }
+
     //Admin
     @GetMapping(path = "/{username}")
     MemberResponse getMemberById(@PathVariable String username) throws Exception {
-        return memberService.findById(username);
+        return memberService.findById(username, false);
+    }
+
+    @GetMapping(path = "/{username}/includeAll")
+    MemberResponse getMemberByIdIncludeAll(@PathVariable String username) throws Exception {
+        return memberService.findById(username, true);
     }
 
     //Security --> Anonymous

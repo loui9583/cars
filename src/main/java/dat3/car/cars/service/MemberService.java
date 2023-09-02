@@ -12,24 +12,22 @@ import java.util.List;
 
 @Service
 public class MemberService {
-    final
-    MemberRepository memberRepository;
+    final MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 
-
     public List<MemberResponse> getMembers(boolean includeAll) {
-        /*List<Member> members = memberRepository.findAll();
-        // List<MemberResponse> response = new ArrayList<>();
-        for (Member member : members) {
-          MemberResponse mr = new MemberResponse(member, includeAll);
-        response.add(mr);
-        }
-        */
-        return memberRepository.findAll().stream().map
-                ((member -> new MemberResponse(member, includeAll))).toList();
+        return memberRepository.findAll().stream().map((member -> new MemberResponse(member, includeAll))).toList();
+    }
+
+    public Member getMemberByUsername(String username) {
+        return memberRepository.findById(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Member with this username does not exist"));
+    }
+
+    public MemberResponse findById(String username, boolean includeAll) {
+        return new MemberResponse(getMemberByUsername(username), true);
     }
 
     public MemberResponse addMember(MemberRequest body) {
@@ -44,8 +42,8 @@ public class MemberService {
 
     public void editMember(MemberRequest body, String username) {
         Member member = getMemberByUsername(username);
-        if(!body.getUsername().equals(username)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cannot change username");
+        if (!body.getUsername().equals(username)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot change username");
         }
         member.setUsername(body.getUsername());
         member.setPassword(body.getPassword());
@@ -58,21 +56,10 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-
-    public MemberResponse findById(String username) {
-        return new MemberResponse(getMemberByUsername(username), true);
-    }
-
-    public void setRankingForUser(String username, Integer ranking){
+    public void setRankingForUser(String username, Integer ranking) {
         Member member = getMemberByUsername(username);
         member.setRanking(ranking);
         memberRepository.save(member);
-    }
-
-    public Member getMemberByUsername(String username){
-       return memberRepository.findById(username).orElseThrow(()
-               -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
-               "Member with this username does not exist"));
     }
 
     public void deleteById(String username) {

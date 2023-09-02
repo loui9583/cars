@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//Test lavet af mig, test kommentarer lavet af ChatGPT
 
 @DataJpaTest
 class MemberServiceTest {
@@ -73,7 +74,7 @@ class MemberServiceTest {
     @Test
     void testFindByIdNotFound() {
         // Test at en fejl kastes ved forsøg på at finde et ikke-eksisterende medlem
-        assertThrows(ResponseStatusException.class, () -> memberService.findById("user3"));
+        assertThrows(ResponseStatusException.class, () -> memberService.findById("user3",false));
     }
 
     @Test
@@ -141,7 +142,7 @@ class MemberServiceTest {
         // Test at et medlem kan slettes ved brugernavn og ikke kan findes efter sletning
         memberService.deleteById("user1");
         assertEquals(1, memberService.getMembers(false).size());
-        assertThrows(ResponseStatusException.class, () -> memberService.findById("user1"));
+        assertThrows(ResponseStatusException.class, () -> memberService.findById("user1",true));
     }
 }
 
