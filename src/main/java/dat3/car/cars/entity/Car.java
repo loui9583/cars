@@ -1,9 +1,12 @@
 package dat3.car.cars.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,6 +29,11 @@ public class Car extends AdminDetails {
 
     @Column(name = "max_discount")
     private Integer bestDiscount;
+
+    @OneToMany (mappedBy = "car")
+    @JsonIgnore
+    private List<Reservation> reservations;
+
 
     public Long getId() {
         return id;

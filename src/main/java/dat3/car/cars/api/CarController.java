@@ -30,12 +30,32 @@ public class CarController {
 
     @GetMapping("/id/{id}")
     CarResponse carResponseById(@PathVariable Long id) {
-        return new CarResponse(carService.getCarById(id), false);
+        return new CarResponse(carService.getCarById(id), false, false);
     }
 
     @GetMapping("/id/{id}/includeAll")
     CarResponse carResponseByIdIncludeAll(@PathVariable Long id) {
-        return new CarResponse(carService.getCarById(id), true);
+        return new CarResponse(carService.getCarById(id), true, false);
+    }
+
+    @GetMapping("/findByBrandAndModel/{brand}/{model}")
+    List<CarResponse> carResponses (@PathVariable String brand, @PathVariable String model){
+        return carService.findCarsByBrandAndModel(brand,model);
+    }
+
+    @GetMapping("/orderByBestDiscount")
+    List<CarResponse> orderByBestDiscount (){
+        return carService.getAllCarsSortByBestDiscount();
+    }
+
+    @GetMapping("/findAllWhereReservationIsNotNull")
+    List<CarResponse> findAllWhereReservationIsNotNull (){
+        return carService.getAllCarsWhereReservationsIsNotNull();
+    }
+
+    @GetMapping("/findAllWhereReservationIsNull")
+    List<CarResponse> findAllWhereReservationIsNull (){
+        return carService.getAllCarsWhereReservationsIsNull();
     }
 
     @PostMapping()
@@ -57,4 +77,7 @@ public class CarController {
     Car setBestDiscount(@PathVariable Long id, @PathVariable Integer bestDiscount) {
         return carService.setBestDiscountById(id, bestDiscount);
     }
+
+    @GetMapping("/avgPricePrDay")
+    Double avgPricePrDay(){return carService.avgPricePrDay();}
 }

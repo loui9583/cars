@@ -18,8 +18,14 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
+
+    public List<MemberResponse> findMembersWhereReservationsIsNotNull() {
+        return memberRepository.findAllByReservationsIsNotNull().stream().map((member -> new MemberResponse(member, false,true))).toList();
+    }
+
+
     public List<MemberResponse> getMembers(boolean includeAll) {
-        return memberRepository.findAll().stream().map((member -> new MemberResponse(member, includeAll))).toList();
+        return memberRepository.findAll().stream().map((member -> new MemberResponse(member, includeAll,false))).toList();
     }
 
     public Member getMemberByUsername(String username) {
@@ -27,7 +33,7 @@ public class MemberService {
     }
 
     public MemberResponse findById(String username, boolean includeAll) {
-        return new MemberResponse(getMemberByUsername(username), true);
+        return new MemberResponse(getMemberByUsername(username), true, true);
     }
 
     public MemberResponse addMember(MemberRequest body) {
@@ -37,7 +43,7 @@ public class MemberService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user already exists");
         }
         newMember = memberRepository.save(newMember);
-        return new MemberResponse(newMember, true);
+        return new MemberResponse(newMember, true, false);
     }
 
     public void editMember(MemberRequest body, String username) {

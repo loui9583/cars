@@ -2,13 +2,15 @@ package dat3.car.cars.config;
 
 import dat3.car.cars.entity.Car;
 import dat3.car.cars.entity.Member;
+import dat3.car.cars.entity.Reservation;
 import dat3.car.cars.repositories.CarRepository;
 import dat3.car.cars.repositories.MemberRepository;
+import dat3.car.cars.repositories.ReservationRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,20 +19,35 @@ public class DeveloperData implements ApplicationRunner {
 
     CarRepository carRepository;
     MemberRepository memberRepository;
+    ReservationRepository reservationRepository;
 
-    public DeveloperData(CarRepository carRepository, MemberRepository memberRepository) {
+    public DeveloperData(CarRepository carRepository, MemberRepository memberRepository, ReservationRepository reservationRepository) {
         this.carRepository = carRepository;
         this.memberRepository = memberRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) {
         carRepository.saveAll(generateCars());
         memberRepository.saveAll(generateMembers());
+        reservationRepository.saveAll(generateReservations());
     }
 
-    @GetMapping("/members")
-    List<Member> generateMembers() {
+    private List<Reservation> generateReservations(){
+        List<Reservation> reservations = new ArrayList<>();
+        reservations.add(new Reservation(LocalDate.of(2026,10,15),LocalDate.of(2027,10,15),memberRepository.findById("john_doe").get(),carRepository.findById(1L).get()));
+        reservations.add(new Reservation(LocalDate.of(2023,10,15),LocalDate.of(2024,10,15),memberRepository.findById("john_doe").get(),carRepository.findById(2L).get()));
+        reservations.add(new Reservation(LocalDate.of(2022,10,15),LocalDate.of(2023,10,15),memberRepository.findById("jane_doe").get(),carRepository.findById(3L).get()));
+        reservations.add(new Reservation(LocalDate.of(2024,10,15),LocalDate.of(2025,10,15),memberRepository.findById("jane_doe").get(),carRepository.findById(4L).get()));
+        reservations.add(new Reservation(LocalDate.of(2022,10,15),LocalDate.of(2023,10,15),memberRepository.findById("alex_walker").get(),carRepository.findById(5L).get()));
+        reservations.add(new Reservation(LocalDate.of(2023,10,15),LocalDate.of(2024,10,15),memberRepository.findById("david_wilson").get(),carRepository.findById(6L).get()));
+        reservations.add(new Reservation(LocalDate.of(2022,10,15),LocalDate.of(2023,10,15),memberRepository.findById("olivia_smith").get(),carRepository.findById(8L).get()));
+
+        return reservations;
+    }
+
+    private List<Member> generateMembers() {
         List<Member> members = new ArrayList<>();
         members.add(new Member("john_doe", "password123", "john@example.com", "John", "Doe", "123 Main St", "New York", "10001"));
         members.add(new Member("jane_doe", "pass456", "jane@example.com", "Jane", "Doe", "456 Elm St", "Los Angeles", "90001"));
@@ -44,8 +61,6 @@ public class DeveloperData implements ApplicationRunner {
         members.add(new Member("olivia_smith", "olivia123", "olivia@example.com", "Olivia", "Smith", "5432 Pine Rd", "Denver", "80201"));
         return members;
     }
-
-
     private List<Car> generateCars() {
         List<Car> cars = new ArrayList<>();
         cars.add(new Car("Toyota", "Camry", 100.0, 15));
@@ -95,7 +110,7 @@ public class DeveloperData implements ApplicationRunner {
         cars.add(new Car("Chevrolet", "Silverado", 175.0, 24));
         cars.add(new Car("Ram", "1500", 185.0, 26));
         cars.add(new Car("GMC", "Sierra", 170.0, 23));
-
+        cars.add(new Car("GMC", "Sierra", 170.0, 23));
         return cars;
     }
 

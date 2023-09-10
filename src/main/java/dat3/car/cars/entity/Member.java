@@ -1,12 +1,13 @@
 package dat3.car.cars.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -47,6 +48,10 @@ public class Member extends AdminDetails {
 
     @Column
     private int ranking;
+
+    @OneToMany (mappedBy = "member")
+    @JsonIgnore
+    private List<Reservation> reservations;
 
     // Constructors
     public Member(String user, String password, String email, String firstName, String lastName, String street, String city, String zip) {

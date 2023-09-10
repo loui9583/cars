@@ -25,6 +25,4 @@ public class CarRequest {
         this.pricePrDay = m.getPricePrDay();
         this.bestDiscount = m.getBestDiscount();
     }
-
-
 }

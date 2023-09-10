@@ -28,6 +28,11 @@ class MemberController {
         return memberService.getMembers(true);
     }
 
+    @GetMapping("/findAllMembersWhereReservationsIsNotNull")
+    List<MemberResponse> findAllMembersWhereReservationsIsNotNull() {
+        return memberService.findMembersWhereReservationsIsNotNull();
+    }
+
     //Admin
     @GetMapping(path = "/{username}")
     MemberResponse getMemberById(@PathVariable String username) throws Exception {

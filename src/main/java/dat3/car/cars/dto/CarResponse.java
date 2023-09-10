@@ -3,9 +3,12 @@ package dat3.car.cars.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import dat3.car.cars.entity.Car;
+import dat3.car.cars.entity.Reservation;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -20,13 +23,13 @@ public class CarResponse {
     private String model;
     private Double pricePrDay;
     private Integer bestDiscount;
+    private List<ReservationResponse> reservations;
+
 
     LocalDateTime created;
-
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", shape = JsonFormat.Shape.STRING)
     LocalDateTime edited;
 
-    public CarResponse(Car c, boolean includeAll) {
+    public CarResponse(Car c, boolean includeAll, boolean includeReservations) {
         this.brand = c.getBrand();
         this.model = c.getModel();
         this.pricePrDay = c.getPricePrDay();
@@ -35,6 +38,12 @@ public class CarResponse {
             this.created = c.getCreated();
             this.edited = c.getEdited();
             this.bestDiscount = c.getBestDiscount();
+        }
+        if (includeReservations){
+            for (Reservation r : c.getReservations()){
+                reservations = new ArrayList<>();
+                reservations.add(new ReservationResponse(r,false, true, false));
+            }
         }
     }
 }

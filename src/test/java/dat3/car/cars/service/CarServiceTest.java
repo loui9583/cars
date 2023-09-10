@@ -7,22 +7,20 @@ import dat3.car.cars.repositories.CarRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
-/*Da jeg brugte @DataJpaTest passede mine tests individuelt, men ikke når jeg kørte dem samlet.
-Da jeg brugte @SpringBootTest sammen med @Transactional virkede det.
-Er godt klar over det ikke er det her der er meningen, men jeg synes det var nogle okay test så jeg ville gerne
-have dem med og kunne kun få det til at virke sådan her. Testede også api'erne manuelt med postman
-og der virkede det også.
-*/
-@Transactional
-@SpringBootTest
+@DataJpaTest
 class CarServiceTest {
 
     @Autowired
@@ -34,10 +32,13 @@ class CarServiceTest {
 
     @BeforeEach
     void setUp() {
+
+        // jdbcTemplate.execute("ALTER TABLE car ALTER COLUMN id RESTART WITH 1");
         c1 = carRepository.save(new Car("brand1", "model1", 100.5, 15));
         c2 = carRepository.save(new Car("brand2", "model2", 200.5, 25));
         carService = new CarService(carRepository);
     }
+
 
     @Test
     public void shouldAddNewCar() {
@@ -54,16 +55,16 @@ class CarServiceTest {
         // Test redigering af en eksisterende bil ved hjælp af dens ID og kontroller, om ændringer blev gemt korrekt.
         Car car = new Car("test","test1",1,2);
         CarRequest carRequest = new CarRequest(car);
-        carService.editCarById(carRequest,1L);
-        assertEquals("test1",carService.getCarById(1L).getModel());
-        assertEquals("test",carService.getCarById(1L).getBrand());
-        assertEquals(1,carService.getCarById(1L).getPricePrDay());
-        assertEquals(2,carService.getCarById(1L).getBestDiscount());
+        carService.editCarById(carRequest,c1.getId());
+        assertEquals("test1",carService.getCarById(c1.getId()).getModel());
+        assertEquals("test",carService.getCarById(c1.getId()).getBrand());
+        assertEquals(1,carService.getCarById(c1.getId()).getPricePrDay());
+        assertEquals(2,carService.getCarById(c1.getId()).getBestDiscount());
     }
 
     @Test
     public void shouldGetCarByIdIncludeAllFalse() {
-        CarResponse carResponse = new CarResponse(carService.getCarById(1L),false);
+        CarResponse carResponse = new CarResponse(carService.getCarById(c1.getId()),false, false);
 
         assertNotNull(carResponse.getModel());
         assertNotNull(carResponse.getBrand());
@@ -106,8 +107,7 @@ class CarServiceTest {
 
     @Test
     public void shouldGetCarByIdIncludeAllTrue() {
-        CarResponse carResponse = new CarResponse(carService.getCarById(1L),true);
-
+        CarResponse carResponse = new CarResponse(carService.getCarById(c1.getId()),true, false);
         assertNotNull(carResponse.getModel());
         assertNotNull(carResponse.getBrand());
         assertNotNull(carResponse.getPricePrDay());
@@ -120,15 +120,15 @@ class CarServiceTest {
     @Test
     public void shouldSetPricePrDayById() {
         // Test indstilling af daglig pris for en eksisterende bil ved hjælp af dens ID og kontroller, om prisen blev opdateret korrekt.
-        carService.setPricePrDayById(1L, 10.0);
-        assertEquals(10.0, carService.getCarById(1L).getPricePrDay());
+        carService.setPricePrDayById(c1.getId(), 10.0);
+        assertEquals(10.0, carService.getCarById(c1.getId()).getPricePrDay());
     }
 
     @Test
     public void shouldSetBestDiscountById() {
         // Test indstilling af den bedste rabat for en eksisterende bil ved hjælp af dens ID og kontroller, om rabatten blev opdateret korrekt.
-        carService.setBestDiscountById(1L, 10);
-        assertEquals(10,carService.getCarById(1L).getBestDiscount());
+        carService.setBestDiscountById(c1.getId(), 10);
+        assertEquals(10,carService.getCarById(c1.getId()).getBestDiscount());
     }
 
     @Test
@@ -139,5 +139,5 @@ class CarServiceTest {
         CarRequest carRequest = new CarRequest(car);
         assertThrows(ResponseStatusException.class, () -> carService.addCar(carRequest));
     }
-
 }
+
