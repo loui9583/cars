@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/cars")
+@CrossOrigin
 public class CarController {
 
     final CarService carService;
@@ -39,22 +40,22 @@ public class CarController {
     }
 
     @GetMapping("/findByBrandAndModel/{brand}/{model}")
-    List<CarResponse> carResponses (@PathVariable String brand, @PathVariable String model){
-        return carService.findCarsByBrandAndModel(brand,model);
+    List<CarResponse> carResponses(@PathVariable String brand, @PathVariable String model) {
+        return carService.findCarsByBrandAndModel(brand, model);
     }
 
     @GetMapping("/orderByBestDiscount")
-    List<CarResponse> orderByBestDiscount (){
+    List<CarResponse> orderByBestDiscount() {
         return carService.getAllCarsSortByBestDiscount();
     }
 
     @GetMapping("/findAllWhereReservationIsNotNull")
-    List<CarResponse> findAllWhereReservationIsNotNull (){
+    List<CarResponse> findAllWhereReservationIsNotNull() {
         return carService.getAllCarsWhereReservationsIsNotNull();
     }
 
     @GetMapping("/findAllWhereReservationIsNull")
-    List<CarResponse> findAllWhereReservationIsNull (){
+    List<CarResponse> findAllWhereReservationIsNull() {
         return carService.getAllCarsWhereReservationsIsNull();
     }
 
@@ -79,5 +80,12 @@ public class CarController {
     }
 
     @GetMapping("/avgPricePrDay")
-    Double avgPricePrDay(){return carService.avgPricePrDay();}
+    Double avgPricePrDay() {
+        return carService.avgPricePrDay();
+    }
+
+    @DeleteMapping("/{id}")
+    void deleteCar(@PathVariable long id){
+        carService.deleteCar(id);
+    }
 }

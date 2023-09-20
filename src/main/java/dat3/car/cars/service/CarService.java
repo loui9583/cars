@@ -131,6 +131,16 @@ public class CarService {
         return 0.0;
     }
 
+    public void deleteCar(long carId) {
+    Car car = carRepository.findById(carId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
+    
+    if (car.getReservations() != null && !car.getReservations().isEmpty()) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot delete a car with associated reservations");
+    }
+    
+    carRepository.delete(car);
+}
+
 
     //########
 }
